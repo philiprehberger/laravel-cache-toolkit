@@ -1,0 +1,163 @@
+parameters:
+	ignoreErrors:
+		-
+			message: '#^Method PhilipRehberger\\CacheToolkit\\CacheKeyBuilder\:\:forList\(\) has parameter \$filters with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/CacheKeyBuilder.php
+
+		-
+			message: '#^Method PhilipRehberger\\CacheToolkit\\CacheKeyBuilder\:\:forPaginated\(\) has parameter \$filters with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/CacheKeyBuilder.php
+
+		-
+			message: '#^Method PhilipRehberger\\CacheToolkit\\CacheKeyBuilder\:\:tags\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/CacheKeyBuilder.php
+
+		-
+			message: '#^Strict comparison using \!\=\= between non\-empty\-string and null will always evaluate to true\.$#'
+			identifier: notIdentical.alwaysTrue
+			count: 1
+			path: src/CacheKeyBuilder.php
+
+		-
+			message: '#^Method PhilipRehberger\\CacheToolkit\\CacheTagManager\:\:flush\(\) has parameter \$tags with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/CacheTagManager.php
+
+		-
+			message: '#^Method PhilipRehberger\\CacheToolkit\\CacheTagManager\:\:flushTypes\(\) has parameter \$types with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/CacheTagManager.php
+
+		-
+			message: '#^Method PhilipRehberger\\CacheToolkit\\CacheTagManager\:\:flushTypes\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/CacheTagManager.php
+
+		-
+			message: '#^Method PhilipRehberger\\CacheToolkit\\CacheTagManager\:\:forget\(\) has parameter \$tags with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/CacheTagManager.php
+
+		-
+			message: '#^Method PhilipRehberger\\CacheToolkit\\CacheTagManager\:\:get\(\) has parameter \$tags with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/CacheTagManager.php
+
+		-
+			message: '#^Method PhilipRehberger\\CacheToolkit\\CacheTagManager\:\:getConfiguredTags\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/CacheTagManager.php
+
+		-
+			message: '#^Method PhilipRehberger\\CacheToolkit\\CacheTagManager\:\:has\(\) has parameter \$tags with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/CacheTagManager.php
+
+		-
+			message: '#^Method PhilipRehberger\\CacheToolkit\\CacheTagManager\:\:put\(\) has parameter \$tags with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/CacheTagManager.php
+
+		-
+			message: '#^Method PhilipRehberger\\CacheToolkit\\CacheTagManager\:\:remember\(\) has parameter \$tags with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/CacheTagManager.php
+
+		-
+			message: '#^Unable to resolve the template type TCacheValue in call to method Illuminate\\Cache\\Repository\:\:remember\(\)$#'
+			identifier: argument.templateType
+			count: 1
+			path: src/CacheTagManager.php
+
+		-
+			message: '#^Unable to resolve the template type TCacheValue in call to static method Illuminate\\Cache\\Repository\:\:remember\(\)$#'
+			identifier: argument.templateType
+			count: 1
+			path: src/CacheTagManager.php
+
+		-
+			message: '#^Class PhilipRehberger\\CacheToolkit\\Facades\\CacheKey has PHPDoc tag @method for method forList\(\) parameter \#2 \$filters with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Facades/CacheKey.php
+
+		-
+			message: '#^Class PhilipRehberger\\CacheToolkit\\Facades\\CacheKey has PHPDoc tag @method for method forPaginated\(\) parameter \#4 \$filters with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Facades/CacheKey.php
+
+		-
+			message: '#^Class PhilipRehberger\\CacheToolkit\\Facades\\CacheKey has PHPDoc tag @method for method tags\(\) return type with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Facades/CacheKey.php
+
+		-
+			message: '#^Class PhilipRehberger\\CacheToolkit\\Facades\\CacheTag has PHPDoc tag @method for method flush\(\) parameter \#1 \$tags with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Facades/CacheTag.php
+
+		-
+			message: '#^Class PhilipRehberger\\CacheToolkit\\Facades\\CacheTag has PHPDoc tag @method for method flushTypes\(\) parameter \#1 \$types with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Facades/CacheTag.php
+
+		-
+			message: '#^Class PhilipRehberger\\CacheToolkit\\Facades\\CacheTag has PHPDoc tag @method for method flushTypes\(\) return type with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Facades/CacheTag.php
+
+		-
+			message: '#^Class PhilipRehberger\\CacheToolkit\\Facades\\CacheTag has PHPDoc tag @method for method forget\(\) parameter \#2 \$tags with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Facades/CacheTag.php
+
+		-
+			message: '#^Class PhilipRehberger\\CacheToolkit\\Facades\\CacheTag has PHPDoc tag @method for method get\(\) parameter \#2 \$tags with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Facades/CacheTag.php
+
+		-
+			message: '#^Class PhilipRehberger\\CacheToolkit\\Facades\\CacheTag has PHPDoc tag @method for method getConfiguredTags\(\) return type with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Facades/CacheTag.php
+
+		-
+			message: '#^Class PhilipRehberger\\CacheToolkit\\Facades\\CacheTag has PHPDoc tag @method for method has\(\) parameter \#2 \$tags with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Facades/CacheTag.php
+
+		-
+			message: '#^Class PhilipRehberger\\CacheToolkit\\Facades\\CacheTag has PHPDoc tag @method for method put\(\) parameter \#4 \$tags with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Facades/CacheTag.php
+
+		-
+			message: '#^Class PhilipRehberger\\CacheToolkit\\Facades\\CacheTag has PHPDoc tag @method for method remember\(\) parameter \#3 \$tags with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Facades/CacheTag.php
