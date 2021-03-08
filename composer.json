@@ -1,6 +1,6 @@
 {
     "name": "philiprehberger/laravel-cache-toolkit",
-    "description": "Standardized cache key builder and tag-aware cache operations for Laravel with graceful fallback for non-tagging drivers.",
+    "description": "Standardized cache key builder and tag-aware cache operations for Laravel with graceful fallback for non-tagging drivers",
     "keywords": ["laravel", "cache", "tags", "key-builder", "redis", "memcached"],
     "type": "library",
     "license": "MIT",
