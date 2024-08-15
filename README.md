@@ -2,8 +2,7 @@
 
 [![Tests](https://github.com/philiprehberger/laravel-cache-toolkit/actions/workflows/tests.yml/badge.svg)](https://github.com/philiprehberger/laravel-cache-toolkit/actions/workflows/tests.yml)
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/philiprehberger/laravel-cache-toolkit.svg)](https://packagist.org/packages/philiprehberger/laravel-cache-toolkit)
-[![License](https://img.shields.io/github/license/philiprehberger/laravel-cache-toolkit)](LICENSE)
-[![Sponsor](https://img.shields.io/badge/sponsor-GitHub%20Sponsors-ec6cb9)](https://github.com/sponsors/philiprehberger)
+[![Last updated](https://img.shields.io/github/last-commit/philiprehberger/laravel-cache-toolkit)](https://github.com/philiprehberger/laravel-cache-toolkit/commits/main)
 
 Standardized cache key builder and tag-aware cache operations for Laravel with graceful fallback for non-tagging drivers.
 
@@ -143,6 +142,24 @@ vendor/bin/pint --test
 vendor/bin/phpstan analyse
 ```
 
+## Support
+
+If you find this project useful:
+
+⭐ [Star the repo](https://github.com/philiprehberger/laravel-cache-toolkit)
+
+🐛 [Report issues](https://github.com/philiprehberger/laravel-cache-toolkit/issues?q=is%3Aissue+is%3Aopen+label%3Abug)
+
+💡 [Suggest features](https://github.com/philiprehberger/laravel-cache-toolkit/issues?q=is%3Aissue+is%3Aopen+label%3Aenhancement)
+
+❤️ [Sponsor development](https://github.com/sponsors/philiprehberger)
+
+🌐 [All Open Source Projects](https://philiprehberger.com/open-source-packages)
+
+💻 [GitHub Profile](https://github.com/philiprehberger)
+
+🔗 [LinkedIn Profile](https://www.linkedin.com/in/philiprehberger)
+
 ## License
 
-MIT
+[MIT](LICENSE)
