@@ -261,3 +261,4 @@ vendor/bin/phpunit
 ## License
 
 MIT License. Copyright (c) 2026 Philip Rehberger. See [LICENSE](LICENSE) for details.
+
