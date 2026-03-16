@@ -2,7 +2,9 @@
     "name": "philiprehberger/laravel-cache-toolkit",
     "description": "Standardized cache key builder and tag-aware cache operations for Laravel with graceful fallback for non-tagging drivers.",
     "keywords": ["laravel", "cache", "tags", "key-builder", "redis", "memcached"],
+    "type": "library",
     "license": "MIT",
+    "homepage": "https://github.com/philiprehberger/laravel-cache-toolkit",
     "authors": [
         {
             "name": "Philip Rehberger",
@@ -37,6 +39,11 @@
                 "PhilipRehberger\\CacheToolkit\\CacheToolkitServiceProvider"
             ]
         }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit",
+        "lint": "vendor/bin/pint",
+        "analyse": "vendor/bin/phpstan analyse"
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
