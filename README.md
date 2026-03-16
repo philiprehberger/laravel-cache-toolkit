@@ -1,5 +1,10 @@
 # Laravel Cache Toolkit
 
+[![Tests](https://github.com/philiprehberger/laravel-cache-toolkit/actions/workflows/tests.yml/badge.svg)](https://github.com/philiprehberger/laravel-cache-toolkit/actions/workflows/tests.yml)
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/philiprehberger/laravel-cache-toolkit.svg)](https://packagist.org/packages/philiprehberger/laravel-cache-toolkit)
+[![PHP Version Require](https://img.shields.io/packagist/php-v/philiprehberger/laravel-cache-toolkit.svg)](https://packagist.org/packages/philiprehberger/laravel-cache-toolkit)
+[![License](https://img.shields.io/github/license/philiprehberger/laravel-cache-toolkit)](LICENSE)
+
 Standardized cache key builder and tag-aware cache operations for Laravel with graceful fallback for non-tagging drivers.
 
 ## Requirements
