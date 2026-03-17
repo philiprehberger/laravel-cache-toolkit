@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace PhilipRehberger\CacheToolkit\Facades;
 
 use Illuminate\Support\Facades\Facade;
+use PhilipRehberger\CacheToolkit\CacheKeyBuilder;
 
 /**
  * Facade for CacheKeyBuilder.
@@ -23,7 +24,7 @@ use Illuminate\Support\Facades\Facade;
  * @method static string prefix(string $type)
  * @method static bool supportsTags()
  *
- * @see \PhilipRehberger\CacheToolkit\CacheKeyBuilder
+ * @see CacheKeyBuilder
  */
 class CacheKey extends Facade
 {
@@ -32,6 +33,6 @@ class CacheKey extends Facade
      */
     protected static function getFacadeAccessor(): string
     {
-        return \PhilipRehberger\CacheToolkit\CacheKeyBuilder::class;
+        return CacheKeyBuilder::class;
     }
 }

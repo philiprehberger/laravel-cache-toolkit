@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace PhilipRehberger\CacheToolkit\Facades;
 
 use Illuminate\Support\Facades\Facade;
+use PhilipRehberger\CacheToolkit\CacheTagManager;
 
 /**
  * Facade for CacheTagManager.
@@ -20,7 +21,7 @@ use Illuminate\Support\Facades\Facade;
  * @method static array getConfiguredTags()
  * @method static bool supportsTags()
  *
- * @see \PhilipRehberger\CacheToolkit\CacheTagManager
+ * @see CacheTagManager
  */
 class CacheTag extends Facade
 {
@@ -29,6 +30,6 @@ class CacheTag extends Facade
      */
     protected static function getFacadeAccessor(): string
     {
-        return \PhilipRehberger\CacheToolkit\CacheTagManager::class;
+        return CacheTagManager::class;
     }
 }

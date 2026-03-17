@@ -2,7 +2,6 @@
 
 [![Tests](https://github.com/philiprehberger/laravel-cache-toolkit/actions/workflows/tests.yml/badge.svg)](https://github.com/philiprehberger/laravel-cache-toolkit/actions/workflows/tests.yml)
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/philiprehberger/laravel-cache-toolkit.svg)](https://packagist.org/packages/philiprehberger/laravel-cache-toolkit)
-[![PHP Version Require](https://img.shields.io/packagist/php-v/philiprehberger/laravel-cache-toolkit.svg)](https://packagist.org/packages/philiprehberger/laravel-cache-toolkit)
 [![License](https://img.shields.io/github/license/philiprehberger/laravel-cache-toolkit)](LICENSE)
 
 Standardized cache key builder and tag-aware cache operations for Laravel with graceful fallback for non-tagging drivers.
@@ -26,13 +25,11 @@ php artisan vendor:publish --tag=cache-toolkit-config
 
 This places `config/cache-toolkit.php` into your application.
 
----
+## Usage
 
-## CacheKeyBuilder
+### CacheKeyBuilder
 
 `CacheKeyBuilder` is a static utility class for building consistent, predictable cache keys.
-
-### make — arbitrary parts
 
 ```php
 use PhilipRehberger\CacheToolkit\CacheKeyBuilder;
@@ -40,201 +37,49 @@ use PhilipRehberger\CacheToolkit\CacheKeyBuilder;
 CacheKeyBuilder::make('client', '123', 'stats');
 // "client:123:stats"
 
-// Empty parts are filtered out automatically
-CacheKeyBuilder::make('client', '', '123');
-// "client:123"
-```
-
-### forModel — Eloquent model instance
-
-```php
-CacheKeyBuilder::forModel($client);
-// "client:42"
-
 CacheKeyBuilder::forModel($client, 'details');
 // "client:42:details"
-```
 
-The prefix is derived from the snake_case class basename (e.g. `ProjectFile` → `project_file`), or overridden via the `prefixes` config.
-
-### forModelType — class name + ID
-
-```php
-CacheKeyBuilder::forModelType(Client::class, 42);
-// "client:42"
-
-CacheKeyBuilder::forModelType(Client::class, 42, 'invoices');
-// "client:42:invoices"
-```
-
-### forList — collections with optional filters
-
-```php
-CacheKeyBuilder::forList('clients');
-// "clients:list:all"
-
-CacheKeyBuilder::forList('clients', ['active' => 1, 'stage' => 'prospect']);
+CacheKeyBuilder::forList('clients', ['active' => 1]);
 // "clients:list:<md5-hash>"
-```
 
-### forPaginated
-
-```php
 CacheKeyBuilder::forPaginated('clients', page: 2, perPage: 15);
 // "clients:page:2:15:all"
 
-CacheKeyBuilder::forPaginated('clients', 1, 10, ['status' => 'active']);
-// "clients:page:1:10:<md5-hash>"
-```
-
-### forAnalytics
-
-```php
 CacheKeyBuilder::forAnalytics('revenue', '2026-01-01', '2026-03-31');
 // "analytics:revenue:2026-01-01:2026-03-31"
 
-CacheKeyBuilder::forAnalytics('revenue');
-// "analytics:revenue:all:all"
-```
-
-### forUser
-
-```php
 CacheKeyBuilder::forUser(userId: 5, type: 'dashboard');
 // "user:5:dashboard"
 ```
 
-### forDateRange
+### CacheTagManager
+
+`CacheTagManager` wraps Laravel's Cache facade with tag-aware operations. When the driver does not support tags (file, array, database) all operations fall back transparently to plain cache calls.
 
 ```php
-CacheKeyBuilder::forDateRange('reports', '2026-01-01', '2026-01-31');
-// "reports:2026-01-01:2026-01-31"
-```
-
-### TTL helpers
-
-```php
-// Returns integer seconds from config('cache-toolkit.ttl.<type>')
-CacheKeyBuilder::ttl('dashboard_stats');
-// 300
-
-// Returns a DateTimeInterface (Carbon) for use with Cache::put()
-CacheKeyBuilder::ttlCarbon('dashboard_stats');
-```
-
-### Tag helpers
-
-```php
-// Returns array of tags from config('cache-toolkit.tags.<type>')
-CacheKeyBuilder::tags('clients');
-// ['clients', 'crm']
-```
-
-### Driver detection
-
-```php
-CacheKeyBuilder::supportsTags();
-// true  — when driver is redis or memcached
-// false — file, array, database, etc.
-```
-
----
-
-## CacheTagManager
-
-`CacheTagManager` wraps Laravel's Cache facade with tag-aware operations. When the configured driver does not support tags (file, array, database…) all operations fall back transparently to plain cache calls.
-
-Resolve it via the service container or use the `CacheTag` facade:
-
-```php
-use PhilipRehberger\CacheToolkit\CacheTagManager;
 use PhilipRehberger\CacheToolkit\Facades\CacheTag;
 
-$manager = app(CacheTagManager::class);
-```
-
-### remember
-
-```php
-$value = $manager->remember(
-    ttlKey:   'dashboard_stats',   // resolved via config('cache-toolkit.ttl.dashboard_stats')
+$value = CacheTag::remember(
+    ttlKey:   'dashboard_stats',
     callback: fn () => expensiveQuery(),
     tags:     ['clients'],
-    // remaining args become the cache key parts
     'client', '42', 'stats'
 );
+
+CacheTag::put($key, $data, ttl: 300, tags: ['clients']);
+CacheTag::get($key, tags: ['clients']);
+CacheTag::forget($key, tags: ['clients']);
+CacheTag::flush(['clients']);
+CacheTag::flushType('clients');
 ```
 
-### put / get / has / forget
+### Configuration
 
 ```php
-$key = CacheKeyBuilder::forModel($client, 'profile');
-
-$manager->put($key, $data, ttl: 300, tags: ['clients']);
-$manager->get($key, tags: ['clients']);
-$manager->has($key, tags: ['clients']);
-$manager->forget($key, tags: ['clients']);
-```
-
-All four methods accept an optional `$tags` array. Tags are ignored when the driver does not support them.
-
-### flush — invalidate by tags
-
-```php
-// Flush everything tagged 'clients'
-$manager->flush(['clients']);
-
-// Flush using the tags configured for a type
-$manager->flushType('clients');    // reads config('cache-toolkit.tags.clients')
-
-// Flush multiple types, returns ['clients' => bool, 'invoices' => bool]
-$manager->flushTypes(['clients', 'invoices']);
-```
-
-`flush` and `flushType` return `false` (and log a debug message) when the driver does not support tags, so callers never need to guard against exceptions.
-
----
-
-## Tag fallback behaviour
-
-| Driver     | Tags supported | Behaviour                                               |
-|------------|----------------|---------------------------------------------------------|
-| `redis`    | Yes            | Tags used for grouping and invalidation                 |
-| `memcached`| Yes            | Tags used for grouping and invalidation                 |
-| `file`     | No             | Operations fall back to plain cache; `flush` returns `false` |
-| `array`    | No             | Operations fall back to plain cache; `flush` returns `false` |
-| `database` | No             | Operations fall back to plain cache; `flush` returns `false` |
-
-No exceptions are thrown on unsupported drivers — the toolkit degrades gracefully.
-
----
-
-## Facades
-
-```php
-use PhilipRehberger\CacheToolkit\Facades\CacheKey;
-use PhilipRehberger\CacheToolkit\Facades\CacheTag;
-
-CacheKey::forModel($client, 'stats');
-CacheTag::remember('ttl_key', fn () => ..., ['clients'], 'client', '42', 'stats');
-```
-
----
-
-## Configuration reference
-
-`config/cache-toolkit.php`:
-
-```php
+// config/cache-toolkit.php
 return [
-
-    // Override the snake_case class-basename prefix for model types
-    'prefixes' => [
-        // 'client'  => 'cl',
-        // 'project' => 'proj',
-    ],
-
-    // TTL values in seconds; 'default' is the fallback
+    'prefixes' => [],
     'ttl' => [
         'default' => 300,
         'short'   => 60,
@@ -242,17 +87,51 @@ return [
         'long'    => 3600,
         'daily'   => 86400,
     ],
-
-    // Map cache types to tag arrays for grouped invalidation
-    'tags' => [
-        // 'clients'  => ['clients'],
-        // 'invoices' => ['invoices', 'billing'],
-    ],
-
+    'tags' => [],
 ];
 ```
 
----
+## API
+
+### CacheKeyBuilder
+
+| Method | Description | Returns |
+|--------|-------------|---------|
+| `CacheKeyBuilder::make(string ...$parts)` | Build a key from arbitrary parts (empty parts filtered) | `string` |
+| `CacheKeyBuilder::forModel(Model $model, string ...$suffix)` | Build a key from a model instance | `string` |
+| `CacheKeyBuilder::forModelType(string $class, int\|string $id, string ...$suffix)` | Build a key from a class name and ID | `string` |
+| `CacheKeyBuilder::forList(string $type, array $filters = [])` | Build a list key with optional filter hash | `string` |
+| `CacheKeyBuilder::forPaginated(string $type, int $page, int $perPage, array $filters = [])` | Build a paginated list key | `string` |
+| `CacheKeyBuilder::forAnalytics(string $type, ?string $from = null, ?string $to = null)` | Build an analytics key | `string` |
+| `CacheKeyBuilder::forUser(int $userId, string $type)` | Build a user-scoped key | `string` |
+| `CacheKeyBuilder::forDateRange(string $type, string $from, string $to)` | Build a date-range key | `string` |
+| `CacheKeyBuilder::ttl(string $key)` | Get TTL in seconds from config | `int` |
+| `CacheKeyBuilder::ttlCarbon(string $key)` | Get TTL as Carbon instance | `DateTimeInterface` |
+| `CacheKeyBuilder::tags(string $type)` | Get tag array from config | `string[]` |
+| `CacheKeyBuilder::supportsTags()` | Check if current driver supports tags | `bool` |
+
+### CacheTagManager
+
+| Method | Description | Returns |
+|--------|-------------|---------|
+| `->remember(string $ttlKey, callable $callback, array $tags, string ...$keyParts)` | Get or store a value | `mixed` |
+| `->put(string $key, mixed $value, int $ttl, array $tags = [])` | Store a value | `void` |
+| `->get(string $key, array $tags = [])` | Retrieve a value | `mixed` |
+| `->has(string $key, array $tags = [])` | Check existence | `bool` |
+| `->forget(string $key, array $tags = [])` | Remove a value | `void` |
+| `->flush(array $tags)` | Flush all entries for given tags | `bool` |
+| `->flushType(string $type)` | Flush entries for a config-defined type | `bool` |
+| `->flushTypes(string[] $types)` | Flush multiple config-defined types | `bool[]` |
+
+### Tag Driver Support
+
+| Driver | Tags Supported | Behaviour |
+|--------|---------------|-----------|
+| `redis` | Yes | Tags used for grouping and invalidation |
+| `memcached` | Yes | Tags used for grouping and invalidation |
+| `file` | No | Falls back to plain cache; `flush` returns `false` |
+| `array` | No | Falls back to plain cache; `flush` returns `false` |
+| `database` | No | Falls back to plain cache; `flush` returns `false` |
 
 ## Development
 
@@ -265,5 +144,4 @@ vendor/bin/phpstan analyse
 
 ## License
 
-MIT License. Copyright (c) 2026 Philip Rehberger. See [LICENSE](LICENSE) for details.
-
+MIT
